@@ -1,0 +1,24 @@
+name: Windows EXE Build
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm install
+      - run: npm run lint
+      - run: npm run dist:win
+      - uses: actions/upload-artifact@v4
+        with:
+          name: QR-code-maker-Windows
+          path: dist/*
+          if-no-files-found: error
