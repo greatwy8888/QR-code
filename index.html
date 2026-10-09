@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f9ff"><meta name="description" content="二维码制作：快速生成并保存网址与文件二维码">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+<title>二维码制作</title>
+</head>
+<body>
+<header class="topbar"><div class="brand"><img src="assets/icon.svg" alt="" class="brand-icon"><div><strong>二维码制作</strong><small>简单 · 快速 · 安全</small></div></div><span class="version">版本 1.0.0</span></header>
+<main class="shell">
+<section class="intro"><span class="eyebrow">YOUR QR STUDIO</span><h1>让分享，<span>简单一点。</span></h1><p>把网址或文件变成随时可扫描的二维码。</p></section>
+<div class="workspace">
+<section class="panel controls">
+<div class="tabs" role="tablist"><button class="tab active" data-mode="url" role="tab" aria-selected="true">↗ 网址二维码</button><button class="tab" data-mode="file" role="tab" aria-selected="false">↑ 文件二维码</button></div>
+<div id="urlPane" class="pane"><label for="urlInput">网址链接</label><input id="urlInput" type="url" placeholder="https://example.com" autocomplete="url"><p class="hint">支持网站、图床、网盘等可访问链接。</p><button id="makeUrl" class="primary">生成二维码 <span>→</span></button></div>
+<div id="filePane" class="pane hidden"><label class="dropzone" for="fileInput"><span class="upload-icon">↑</span><strong>选择一个文件</strong><span>图片、文本、Office、APK 等</span><small id="fileName">点击选择，或从设备中打开</small></label><input id="fileInput" type="file" hidden><p class="hint">小文件可尝试生成内嵌二维码；普通二维码容量有限。大文件建议先上传到可公开访问的托管服务，再使用下载链接生成二维码。</p><button id="makeFile" class="primary">为文件生成二维码 <span>→</span></button></div>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+<div class="privacy"><span>✦</span><div><strong>你的文件，由你掌控</strong><p>网址直接在本地编码。本应用不会自动上传你的文件。</p></div></div>
+</section>
+<section class="panel preview-panel"><div class="preview-heading"><div><span class="eyebrow">LIVE PREVIEW</span><h2>二维码预览</h2></div><span class="ready" id="readyBadge">等待生成</span></div><div class="qr-stage" id="qrStage"><div class="placeholder"><div class="mini-grid">▦</div><strong>你的二维码会出现在这里</strong><p>输入网址或选择文件开始制作</p></div></div><div class="qr-meta"><span id="qrLabel">PNG 图片 · 高质量</span><button id="saveBtn" class="save" disabled>↓ 保存图片</button></div><p class="footnote">扫描前请确认链接来源可信。</p></section>
+</div>
+<footer>二维码制作 <span>·</span> 轻巧、清晰、随时分享</footer>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" referrerpolicy="no-referrer"></script><script src="app.js"></script>
+</body></html>
