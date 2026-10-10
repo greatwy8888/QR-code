@@ -22,7 +22,7 @@ jobs:
         run: npm install
       - name: Read app version
         id: app-version
-        run: echo "version=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
+        run: echo version=$(node -p 'require("./package.json").version') >> "$GITHUB_OUTPUT"
       - name: Prepare web assets
         run: npm run android:prepare
       - name: Add Capacitor Android project
