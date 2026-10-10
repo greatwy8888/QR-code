@@ -1,0 +1,7 @@
+{
+  "appId": "com.greatwy8888.qrcodemaker",
+  "appName": "二维码制作",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": { "androidScheme": "https" }
+}
