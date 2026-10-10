@@ -4,7 +4,8 @@
 
 ## 功能
 - 输入网址生成二维码并保存 PNG
-- 选择本地文件生成二维码（二维码内嵌小文件；较大文件请先上传至可公开访问的文件托管服务，再使用其下载链接生成二维码）
+- TXT 文件二维码直接包含文字正文；HTML 尝试使用网页 data URL（部分扫码器会拦截）
+- APK、Office、图片等二进制文件请先上传到可公开访问的托管服务，再用下载链接生成二维码；文件不会自动上传
 - 响应式浅色界面，支持手机、平板和桌面
 - PWA、Electron 桌面打包配置
 
@@ -20,7 +21,7 @@ npm run start
 - Windows：`npm run dist:win`
 - Android：参照 `docs/ANDROID.md` 使用 Android Studio/Gradle 构建。
 
-首次版本：`1.0.0`。后续修复递增 patch 版本号。
+当前版本：`1.0.2`。后续修复递增 patch 版本号。
 
 ## 安全与发布
 Android 正式签名需由发布者自行提供并安全保管 keystore；仓库不包含私钥。GitHub Actions 构建产物并不自动等于正式签名版本。
