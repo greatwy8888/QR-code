@@ -1,16 +1,16 @@
 # Android 构建说明
 
-当前仓库提供响应式 Web/PWA 核心。要生成原生 Android APK，可使用 Capacitor 将其封装；首次构建需要安装 Node.js、Android Studio 与 Android SDK。
+项目使用 Capacitor 封装现有响应式 Web 界面。构建需要本地 Node.js、JDK 与 Android Studio/SDK 环境。
 
-## 建议流程
-1. 安装 Node.js 20+，运行 `npm install`。
-2. 添加 Capacitor：`npm install @capacitor/core @capacitor/cli @capacitor/android`。
-3. 在项目根目录初始化 Capacitor，appName 设置为「二维码制作」，appId 设置为 `com.greatwy8888.qrcodemaker`，webDir 设置为项目 Web 输出目录（建议先创建 `www` 并复制 index.html、styles.css、app.js、manifest.webmanifest、assets）。
-4. `npx cap add android`，然后 `npx cap sync android`。
-5. 用 Android Studio 打开 android 目录，运行测试；发布时使用 Build > Generate Signed Bundle / APK。
+## 构建准备
+1. 安装 Node.js 20+、JDK 17 和 Android Studio。
+2. 在仓库根目录运行 `npm install`。
+3. 首次添加 Android 工程：`npm run android:add`。
+4. 后续同步网页代码：`npm run android:sync`。
+5. 运行 `npx cap open android`，在 Android Studio 中构建与测试。
 
-## 正式签名
-在 Android Studio 中创建或选择自己的 keystore，妥善备份 keystore 与密码。不要提交私钥、密码或签名文件到 Git 仓库。此仓库没有包含发布者的签名证书，因此目前不能声称已有正式签名 APK。
+## Release APK 签名
+请遵循 [ANDROID_SIGNING.md](ANDROID_SIGNING.md)，在自己的电脑生成并保管签名密钥库。仓库不会存储密钥库或密码。使用 Android Studio 的 Generate Signed Bundle / APK 向导构建 Release APK，并通过 `apksigner verify --verbose --print-certs app-release.apk` 检查签名。
 
 ## 文件二维码的限制
-普通二维码容量有限，不能承载任意大小的 Office 文件或 APK。大文件必须先上传到可以公开访问的托管位置，再把下载 URL 编码进二维码。当前应用不会在未经用户同意的情况下上传文件。
+普通二维码容量有限，无法承载任意大小的 Office 文档或 APK。大文件需先上传到可公开访问的托管位置，再将下载 URL 编码进二维码。当前应用不会未经同意自动上传文件。
