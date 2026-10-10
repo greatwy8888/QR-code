@@ -20,6 +20,9 @@ jobs:
           java-version: '17'
       - name: Install dependencies
         run: npm install
+      - name: Read app version
+        id: app-version
+        run: echo "version=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
       - name: Prepare web assets
         run: npm run android:prepare
       - name: Add Capacitor Android project
@@ -40,8 +43,8 @@ jobs:
           if [ ! -f "$APK" ]; then APK="$(find app/build/outputs/apk/release -name '*.apk' | head -n1)"; fi
           BUILD_TOOLS="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$BUILD_TOOLS/zipalign" -v -p 4 "$APK" "$RUNNER_TEMP/app-aligned.apk"
-          "$BUILD_TOOLS/apksigner" sign --ks "$RUNNER_TEMP/release.jks" --ks-key-alias "$KEY_ALIAS" --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEY_PASSWORD --out "$RUNNER_TEMP/二维码制作-1.0.0-release.apk" "$RUNNER_TEMP/app-aligned.apk"
-          "$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$RUNNER_TEMP/二维码制作-1.0.0-release.apk"
+          "$BUILD_TOOLS/apksigner" sign --ks "$RUNNER_TEMP/release.jks" --ks-key-alias "$KEY_ALIAS" --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEY_PASSWORD --out "$RUNNER_TEMP/二维码制作-${{ steps.app-version.outputs.version }}-release.apk" "$RUNNER_TEMP/app-aligned.apk"
+          "$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$RUNNER_TEMP/二维码制作-${{ steps.app-version.outputs.version }}-release.apk"
         env:
           KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
           KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -50,12 +53,12 @@ jobs:
       - name: Stage APKs
         run: |
           mkdir -p release-artifacts
-          cp android/app/build/outputs/apk/debug/app-debug.apk release-artifacts/二维码制作-1.0.0-debug.apk
-          if [ -f "$RUNNER_TEMP/二维码制作-1.0.0-release.apk" ]; then cp "$RUNNER_TEMP/二维码制作-1.0.0-release.apk" release-artifacts/; fi
+          cp android/app/build/outputs/apk/debug/app-debug.apk release-artifacts/二维码制作-${{ steps.app-version.outputs.version }}-debug.apk
+          if [ -f "$RUNNER_TEMP/二维码制作-${{ steps.app-version.outputs.version }}-release.apk" ]; then cp "$RUNNER_TEMP/二维码制作-${{ steps.app-version.outputs.version }}-release.apk" release-artifacts/; fi
           sha256sum release-artifacts/* > release-artifacts/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: QR-code-maker-Android-1.0.0
+          name: QR-code-maker-Android-${{ steps.app-version.outputs.version }}
           path: release-artifacts/*
           if-no-files-found: error
           retention-days: 30
