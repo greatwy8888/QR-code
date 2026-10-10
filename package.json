@@ -1,6 +1,6 @@
 {
   "name": "qr-code-maker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "二维码制作 - 跨平台二维码工具",
   "main": "electron/main.cjs",
   "author": "greatwy8888",
@@ -50,6 +50,8 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
     },
-    "forceCodeSigning": false
+    "forceCodeSigning": false,
+    "asar": true,
+    "compression": "maximum"
   }
 }
