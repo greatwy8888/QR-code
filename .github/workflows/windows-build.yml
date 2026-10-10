@@ -15,10 +15,14 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      - name: Read app version
+        id: app-version
+        shell: bash
+        run: echo "version=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
       - run: npm run lint
       - run: npm run dist:win
       - uses: actions/upload-artifact@v4
         with:
-          name: QR-code-maker-Windows
+          name: QR-code-maker-Windows-${{ steps.app-version.outputs.version }}
           path: dist/*
           if-no-files-found: error
