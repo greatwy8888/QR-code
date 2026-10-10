@@ -1,11 +1,16 @@
 node_modules/
 dist/
 release/
+www/
 android/.gradle/
 android/local.properties
 android/.idea/
+android/app/build/
+android/build/
 *.jks
 *.keystore
+*.p12
+*.pfx
 .env
 .env.*
 !.env.example
